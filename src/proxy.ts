@@ -13,7 +13,10 @@ export function proxy(request: NextRequest) {
   );
 
   if (decision.action === "redirect") {
-    return NextResponse.redirect(decision.url, 308);
+    // Keep the query string (e.g. /lattice?view=people → /?view=people on the product host).
+    const target = new URL(decision.url);
+    if (!target.search && request.nextUrl.search) target.search = request.nextUrl.search;
+    return NextResponse.redirect(target, 308);
   }
 
   if (decision.action === "rewrite") {
@@ -28,5 +31,8 @@ export function proxy(request: NextRequest) {
 export const config = {
   matcher: [
     "/((?!api|_next/static|_next/image|favicon.ico|icon.png|apple-icon.png|opengraph-image.png|robots.txt|sitemap.xml|manifest.webmanifest|brand/|.*\\..*).*)",
+    // Invitation links ("/invite/<id>.<secret>") contain a dot, which the pattern above skips
+    // as a static file, so match them explicitly to rewrite them on product hosts.
+    "/invite/:token",
   ],
 };

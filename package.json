@@ -20,7 +20,7 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run --config vitest.config.mjs",
     "test:rules": "node scripts/test-firestore-rules.mjs",
-    "test:emulator": "firebase emulators:exec --only firestore --project demo-saasassin \"pnpm exec vitest run --config vitest.emulator.config.mjs\"",
+    "test:emulator": "firebase emulators:exec --only firestore,auth --project demo-saasassin \"pnpm exec vitest run --config vitest.emulator.config.mjs\"",
     "firebase:emulators": "firebase emulators:start --only firestore"
   },
   "dependencies": {
@@ -32,6 +32,7 @@
     "lucide-react": "^1.30.0",
     "next": "16.3.0",
     "posthog-js": "^1.414.0",
+    "qrcode": "^1.5.4",
     "radix-ui": "^1.6.7",
     "react": "19.2.8",
     "react-dom": "19.2.8",
@@ -44,6 +45,7 @@
     "@firebase/rules-unit-testing": "^5.0.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/qrcode": "^1.5.6",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "dotenv": "^17.4.2",
